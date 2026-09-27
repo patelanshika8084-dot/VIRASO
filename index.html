@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dharohar — India's Living Heritage Platform. Explore Jhansi's history, culture, traditions and heritage through an immersive digital experience.">
+  <title>Dharohar — India's Living Heritage</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>🏛️</text></svg>">
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="ambient-glow"></div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition-overlay" id="pageTransition">
+    <div class="transition-content">
+      <div class="transition-spinner"></div>
+      <div class="transition-text">Entering Jhansi…</div>
+    </div>
+  </div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <div class="navbar__brand" onclick="navigateToLanding()">
+        <div class="navbar__logo">ध</div>
+        <div class="navbar__title"><span>Dharohar</span></div>
+      </div>
+      <div class="navbar__links">
+        <a href="#" class="navbar__link active" id="nav-home" onclick="navigateToLanding()">Home</a>
+        <a href="#" class="navbar__link" id="nav-explore" onclick="navigateToJhansi()">Explore Jhansi</a>
+        <a href="#" class="navbar__link">Heritage Map</a>
+        <a href="#" class="navbar__link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== LANDING PAGE ===== -->
+  <div id="landing-page">
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero__particles" id="heroParticles"></div>
+      <div class="hero__content">
+        <div class="hero__badge">🏛️ India's Living Heritage Platform</div>
+        <h1 class="hero__title">
+          Discover India's<br><span class="gold-text">Living Heritage</span>
+        </h1>
+        <p class="hero__subtitle">
+          Explore the history, culture, traditions, and stories of India's most significant heritage regions — starting with Jhansi.
+        </p>
+        <div class="hero__search">
+          <div class="search-bar" id="searchBar">
+            <span class="search-bar__icon">🔍</span>
+            <input type="text" class="search-bar__input" id="searchInput"
+                   placeholder="Search heritage sites, cities, traditions..."
+                   autocomplete="off">
+            <button class="search-bar__btn" id="searchBtn">Explore</button>
+          </div>
+          <div id="searchResults" style="max-width:560px;margin:8px auto 0;display:none;"></div>
+        </div>
+      </div>
+      <div class="hero__scroll-hint">
+        <span>Scroll to Explore</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- Interactive 3D India Map Section -->
+    <section class="map-section" id="mapSection">
+      <div class="container">
+        <div class="map-section__header animate-on-scroll">
+          <div class="section-badge">🗺️ Interactive Map</div>
+          <h2 class="section-title">Explore Heritage Regions</h2>
+          <p class="section-subtitle" style="margin:0 auto;">
+            Click on highlighted regions to explore their heritage. Jhansi is our first featured pilot city.
+          </p>
+        </div>
+
+        <div class="india-map-container animate-on-scroll" id="indiaMapContainer">
+          <!-- 3D India Map Image -->
+          <div class="india-map-3d-wrapper">
+            <img src="assets/images/india-3d-map.jpg" alt="3D India Map" class="india-map-3d-img">
+            
+            <!-- Interactive Markers Overlay -->
+            <div class="map-3d-markers">
+              <!-- Jhansi Marker -->
+              <div class="map-3d-marker jhansi-marker" onclick="navigateToJhansi()">
+                <div class="map-3d-marker__dot"></div>
+                <div class="map-3d-marker__ring"></div>
+                <div class="map-3d-marker__label">⚔️ Jhansi</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map interaction hint -->
+          <div style="position:absolute; bottom:16px; left:50%; transform:translateX(-50%); background:var(--bg-glass); backdrop-filter:blur(12px); padding:8px 20px; border-radius:var(--radius-full); border:1px solid var(--border-subtle); font-size:0.75rem; color:var(--text-tertiary);">
+            Click on <span style="color:var(--gold-400); font-weight:600;">Jhansi</span> to explore its heritage
+          </div>
+        </div>
+
+        <!-- Featured Region Card -->
+        <div class="featured-region animate-on-scroll" onclick="navigateToJhansi()">
+          <img src="assets/images/jhansi-fort-hero.jpg" alt="Jhansi Fort" class="featured-region__img">
+          <div class="featured-region__info">
+            <h3>Jhansi <span class="gold-text">— Pilot Region</span></h3>
+            <p>Explore the heritage capital of Bundelkhand — forts, legends, and living traditions.</p>
+            <span class="btn-ghost">Enter Jhansi Heritage →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== JHANSI HERITAGE PAGE ===== -->
+  <div id="jhansi-page">
+
+    <!-- Jhansi Hero -->
+    <section class="jhansi-hero" id="jhansiHero">
+      <div class="jhansi-hero__bg">
+        <img src="assets/images/jhansi-fort-hero.jpg" alt="Jhansi Fort aerial view" loading="lazy">
+      </div>
+      <div class="jhansi-hero__content">
+        <div class="jhansi-hero__back" onclick="navigateToLanding()">
+          ← Back to Dharohar
+        </div>
+        <div class="section-badge">⚔️ Jhansi Pilot Region</div>
+        <h1 class="jhansi-hero__title">
+          Jhansi — <span class="gold-text">Where History Comes Alive</span>
+        </h1>
+        <p class="jhansi-hero__subtitle">
+          Explore the history, culture, traditions and heritage of Jhansi — the storied city of Bundelkhand that witnessed the rise of one of India's greatest freedom fighters.
+        </p>
+        <div class="jhansi-hero__stats">
+          <div class="jhansi-hero__stat">
+            <div class="jhansi-hero__stat-value">11th C.</div>
+            <div class="jhansi-hero__stat-label">Historical Origins</div>
+          </div>
+          <div class="jhansi-hero__stat">
+            <div class="jhansi-hero__stat-value">6+</div>
+            <div class="jhansi-hero__stat-label">Heritage Sites</div>
+          </div>
+          <div class="jhansi-hero__stat">
+            <div class="jhansi-hero__stat-value">Bundeli</div>
+            <div class="jhansi-hero__stat-label">Cultural Region</div>
+          </div>
+          <div class="jhansi-hero__stat">
+            <div class="jhansi-hero__stat-value">1857</div>
+            <div class="jhansi-hero__stat-label">Revolt Connection</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Heritage Overview -->
+    <section class="jhansi-section" id="heritageOverview">
+      <div class="container">
+        <div class="animate-on-scroll">
+          <div class="section-badge">📍 Heritage Overview</div>
+          <h2 class="section-title">Understanding Jhansi</h2>
+          <p class="section-subtitle">A gateway to Bundelkhand's rich historical and cultural legacy.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="overview-grid">
+          <div class="overview-image animate-on-scroll">
+            <img src="assets/images/jhansi-overview.jpg" alt="Panoramic view of Jhansi">
+          </div>
+          <div class="overview-cards animate-on-scroll">
+            <div class="overview-card">
+              <div class="overview-card__icon">📍</div>
+              <div class="overview-card__title">Location</div>
+              <div class="overview-card__text">Jhansi is situated in the Bundelkhand region of southern Uttar Pradesh. It serves as the administrative headquarters of Jhansi district and is a major railway junction.</div>
+            </div>
+            <div class="overview-card">
+              <div class="overview-card__icon">⚔️</div>
+              <div class="overview-card__title">Historical Importance</div>
+              <div class="overview-card__text">Jhansi was a princely state and a key center during the Indian Rebellion of 1857. The city's fort and palaces are testaments to its strategic and political significance.</div>
+            </div>
+            <div class="overview-card">
+              <div class="overview-card__icon">🏔️</div>
+              <div class="overview-card__title">Bundelkhand Connection</div>
+              <div class="overview-card__text">Part of the historic Bundelkhand region, Jhansi shares the cultural traditions, language (Bundeli), and architectural style of this ancient land spanning UP and MP.</div>
+            </div>
+            <div class="overview-card">
+              <div class="overview-card__icon">🏛️</div>
+              <div class="overview-card__title">Cultural Significance</div>
+              <div class="overview-card__text">Jhansi is a living museum of Bundela architecture, folk traditions, and the spirit of resistance. It is closely associated with Rani Lakshmibai's legacy.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Historical Timeline -->
+    <section class="jhansi-section" id="historicalTimeline">
+      <div class="container">
+        <div class="animate-on-scroll">
+          <div class="section-badge">📅 Historical Timeline</div>
+          <h2 class="section-title">Jhansi Through the Ages</h2>
+          <p class="section-subtitle">Key periods and events that shaped Jhansi's identity.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="timeline-container animate-on-scroll">
+          <div class="timeline-track" id="timelineTrack">
+
+            <!-- Timeline Item 1 -->
+            <div class="timeline-item">
+              <div class="timeline-item__connector"></div>
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__card">
+                <div class="timeline-item__body">
+                  <div class="timeline-item__date">11th – 14th Century</div>
+                  <div class="timeline-item__title">Early History & Chandela Period</div>
+                  <div class="timeline-item__desc">The region around Jhansi was part of the territory influenced by the Chandela dynasty, known for building the Khajuraho temples. The area later came under various local chieftains.</div>
+                  <button class="btn-ghost" onclick="alert('Detailed article coming soon in full release.')">Learn More →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="timeline-item">
+              <div class="timeline-item__connector"></div>
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__card">
+                <div class="timeline-item__body">
+                  <div class="timeline-item__date">16th Century</div>
+                  <div class="timeline-item__title">Bundela Rajput Influence</div>
+                  <div class="timeline-item__desc">The Bundela Rajputs established their presence in the region with Orchha as their capital. Bir Singh Deo Bundela was a prominent ruler whose legacy influenced the architecture and culture of the entire Bundelkhand region.</div>
+                  <button class="btn-ghost" onclick="alert('Detailed article coming soon in full release.')">Learn More →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline Item 3 -->
+            <div class="timeline-item">
+              <div class="timeline-item__connector"></div>
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__card">
+                <div class="timeline-item__body">
+                  <div class="timeline-item__date">1613 CE</div>
+                  <div class="timeline-item__title">Jhansi Fort Built</div>
+                  <div class="timeline-item__desc">Jhansi Fort (Jhansi ka Qila) was originally built by Raja Bir Singh Deo of Orchha on the rocky hill called Bangira. The fort was later expanded and strengthened by successive rulers including the Marathas.</div>
+                  <button class="btn-ghost" onclick="alert('Detailed article coming soon in full release.')">Learn More →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline Item 4 -->
+            <div class="timeline-item">
+              <div class="timeline-item__connector"></div>
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__card">
+                <div class="timeline-item__body">
+                  <div class="timeline-item__date">18th Century</div>
+                  <div class="timeline-item__title">Maratha Rule & Jhansi as a Subah</div>
+                  <div class="timeline-item__desc">The Maratha Peshwas took control of Jhansi and it was governed as a subah (province). The Newalkar family was appointed as the subedar (governor) of Jhansi under Maratha authority.</div>
+                  <button class="btn-ghost" onclick="alert('Detailed article coming soon in full release.')">Learn More →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline Item 5 -->
+            <div class="timeline-item">
+              <div class="timeline-item__connector"></div>
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__card">
+                <div class="timeline-item__body">
+                  <div class="timeline-item__date">1842 – 1858</div>
+                  <div class="timeline-item__title">Rani Lakshmibai & the 1857 Uprising</div>
+                  <div class="timeline-item__desc">Rani Lakshmibai, who married Maharaja Gangadhar Rao of Jhansi, became the ruler after his death. When the British attempted to annex Jhansi under the Doctrine of Lapse, she led a fierce resistance during the Indian Rebellion of 1857.</div>
+                  <button class="btn-ghost" onclick="alert('Detailed article coming soon in full release.')">Learn More →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline Item 6 -->
+            <div class="timeline-item">
+              <div class="timeline-item__connector"></div>
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__card">
+                <div class="timeline-item__body">
+                  <div class="timeline-item__date">Post 1858</div>
+                  <div class="timeline-item__title">British Administration</div>
+                  <div class="timeline-item__desc">After the fall of Jhansi in 1858, the city came under direct British control as part of the Central Provinces and later the United Provinces. The British developed Jhansi as a key military cantonment and railway junction.</div>
+                  <button class="btn-ghost" onclick="alert('Detailed article coming soon in full release.')">Learn More →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline Item 7 -->
+            <div class="timeline-item">
+              <div class="timeline-item__connector"></div>
+              <div class="timeline-item__dot"></div>
+              <div class="timeline-item__card">
+                <div class="timeline-item__body">
+                  <div class="timeline-item__date">1947 – Present</div>
+                  <div class="timeline-item__title">Modern Jhansi</div>
+                  <div class="timeline-item__desc">Post-independence, Jhansi became part of Uttar Pradesh. Today it is a major city in the Bundelkhand region, known for its historical heritage, educational institutions, and as an important railway hub connecting northern and southern India.</div>
+                  <button class="btn-ghost" onclick="alert('Detailed article coming soon in full release.')">Learn More →</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="timeline-scroll-hint">← Scroll horizontally to explore the timeline →</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Heritage Map -->
+    <section class="jhansi-section" id="heritageMap">
+      <div class="container">
+        <div class="animate-on-scroll">
+          <div class="section-badge">🗺️ Heritage Map</div>
+          <h2 class="section-title">Jhansi Heritage Map</h2>
+          <p class="section-subtitle">Discover the important heritage landmarks of Jhansi.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="heritage-map-wrapper animate-on-scroll">
+          <div class="heritage-map-canvas" id="heritageMapCanvas">
+            <!-- SVG background map of Jhansi -->
+            <svg width="100%" height="100%" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" style="position:absolute; inset:0;">
+              <defs>
+                <radialGradient id="mapBgGrad" cx="50%" cy="50%">
+                  <stop offset="0%" style="stop-color:rgba(232,173,53,0.06)"/>
+                  <stop offset="100%" style="stop-color:rgba(232,173,53,0)"/>
+                </radialGradient>
+              </defs>
+              <rect width="800" height="520" fill="url(#mapBgGrad)"/>
+
+              <!-- Grid lines -->
+              <g stroke="rgba(255,255,255,0.03)" stroke-width="0.5">
+                <line x1="0" y1="100" x2="800" y2="100"/>
+                <line x1="0" y1="200" x2="800" y2="200"/>
+                <line x1="0" y1="300" x2="800" y2="300"/>
+                <line x1="0" y1="400" x2="800" y2="400"/>
+                <line x1="160" y1="0" x2="160" y2="520"/>
+                <line x1="320" y1="0" x2="320" y2="520"/>
+                <line x1="480" y1="0" x2="480" y2="520"/>
+                <line x1="640" y1="0" x2="640" y2="520"/>
+              </g>
+
+              <!-- Roads (simplified) -->
+              <g stroke="rgba(255,255,255,0.08)" stroke-width="2" fill="none" stroke-dasharray="6,3">
+                <path d="M 0,260 L 400,260 L 500,200 L 800,200"/>
+                <path d="M 400,0 L 400,260 L 400,520"/>
+                <path d="M 200,100 L 400,260 L 600,400"/>
+              </g>
+
+              <!-- City label -->
+              <text x="400" y="35" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-family="Outfit, sans-serif" font-size="22" font-weight="700" letter-spacing="8">JHANSI</text>
+            </svg>
+
+            <!-- Heritage Markers -->
+            <div class="heritage-marker" style="left: 38%; top: 32%;" onclick="openHeritageCard('fort')">
+              <div class="heritage-marker__pin"><span class="heritage-marker__pin-icon">🏰</span></div>
+              <div class="heritage-marker__name">Jhansi Fort</div>
+            </div>
+
+            <div class="heritage-marker" style="left: 48%; top: 55%;" onclick="openHeritageCard('rani-mahal')">
+              <div class="heritage-marker__pin"><span class="heritage-marker__pin-icon">🏛️</span></div>
+              <div class="heritage-marker__name">Rani Mahal</div>
+            </div>
+
+            <div class="heritage-marker" style="left: 62%; top: 38%;" onclick="openHeritageCard('space-museum')">
+              <div class="heritage-marker__pin"><span class="heritage-marker__pin-icon">🚀</span></div>
+              <div class="heritage-marker__name">Space Museum</div>
+            </div>
+
+            <div class="heritage-marker" style="left: 28%; top: 62%;" onclick="openHeritageCard('st-jude')">
+              <div class="heritage-marker__pin"><span class="heritage-marker__pin-icon">⛪</span></div>
+              <div class="heritage-marker__name">St. Jude's Shrine</div>
+            </div>
+
+
+            <div class="heritage-marker" style="left: 72%; top: 52%;" onclick="openHeritageCard('barua-sagar')">
+              <div class="heritage-marker__pin"><span class="heritage-marker__pin-icon">💧</span></div>
+              <div class="heritage-marker__name">Barua Sagar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Heritage Card Overlay (Modal) -->
+    <div class="heritage-card-overlay" id="heritageCardOverlay" onclick="closeHeritageCard(event)">
+      <div class="heritage-card" id="heritageCardContent">
+        <div class="heritage-card__close" onclick="closeHeritageCard(event, true)">✕</div>
+        <img class="heritage-card__img" id="hcImage" src="" alt="">
+        <div class="heritage-card__body">
+          <div class="heritage-card__type" id="hcType"></div>
+          <h3 class="heritage-card__name" id="hcName"></h3>
+          <p class="heritage-card__importance" id="hcImportance"></p>
+          <p class="heritage-card__desc" id="hcDesc"></p>
+          <div class="heritage-card__actions">
+            <button class="btn-primary" onclick="alert('Full exploration experience coming in the next release!')">Explore</button>
+            <button class="btn-outline" onclick="closeHeritageCard(event, true)">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Jhansi Fort — 3D Experience -->
+    <section class="jhansi-section" id="jhansiFort">
+      <div class="container">
+        <div class="animate-on-scroll">
+          <div class="section-badge">🏰 Featured Experience</div>
+          <h2 class="section-title">Jhansi Fort</h2>
+          <p class="section-subtitle">Step inside the legendary fortress that witnessed the courage of Rani Lakshmibai.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <!-- Fort Hero -->
+        <div class="fort-hero animate-on-scroll">
+          <img src="assets/images/jhansi-fort-hero.jpg" alt="Jhansi Fort" class="fort-hero__img">
+          <div class="fort-hero__overlay">
+            <h3 class="fort-hero__title">Jhansi ka Qila</h3>
+            <p class="fort-hero__desc">Built in 1613 by Raja Bir Singh Deo of Orchha on Bangira hill, Jhansi Fort is the most iconic landmark of the city. Spread over an area of 15 acres, the fort stands as a symbol of the valor and resistance that defined Jhansi during the Indian Rebellion of 1857.</p>
+            <button class="btn-primary" onclick="document.getElementById('fort3dViewer').scrollIntoView({behavior:'smooth'})">
+              🏰 Explore the Fort
+            </button>
+          </div>
+        </div>
+
+        <!-- Fort Architectural Features -->
+        <div class="fort-features animate-on-scroll">
+          <div class="fort-feature">
+            <div class="fort-feature__icon">🧱</div>
+            <div class="fort-feature__title">Granite Construction</div>
+            <div class="fort-feature__text">Built primarily of granite, the fort features massive walls with bastions at strategic points. The thick walls were designed to withstand cannon fire during sieges.</div>
+          </div>
+          <div class="fort-feature">
+            <div class="fort-feature__icon">🚪</div>
+            <div class="fort-feature__title">Ten Gates</div>
+            <div class="fort-feature__text">The fort originally had ten gates including the Datia Darwaza, Unnao Gate, Jharna Gate, Laxmi Gate, Sagar Gate, and Orchha Gate, each named after the direction they faced.</div>
+          </div>
+          <div class="fort-feature">
+            <div class="fort-feature__icon">🛕</div>
+            <div class="fort-feature__title">Shiv Temple & Kadak Bijli</div>
+            <div class="fort-feature__text">Inside the fort are the Shiv Temple and the famous cannon "Kadak Bijli" (Thunderbolt). The Panch Mahal within the fort complex served as the royal residential quarters.</div>
+          </div>
+        </div>
+
+        <!-- 3D Viewer -->
+        <div class="fort-3d-viewer animate-on-scroll" id="fort3dViewer">
+          <div class="fort-3d-header">
+            <div class="fort-3d-header__title">
+              🏰 3D Architecture Viewer — <span style="color:var(--gold-400)">Jhansi Fort</span>
+            </div>
+            <div class="fort-3d-header__controls">
+              <button class="fort-3d-control" title="Rotate Left" onclick="rotateFort(-15)">↺</button>
+              <button class="fort-3d-control" title="Rotate Right" onclick="rotateFort(15)">↻</button>
+              <button class="fort-3d-control" title="Zoom In" onclick="zoomFort(0.1)">+</button>
+              <button class="fort-3d-control" title="Zoom Out" onclick="zoomFort(-0.1)">−</button>
+              <button class="fort-3d-control" title="Reset View" onclick="resetFortView()">⟳</button>
+            </div>
+          </div>
+          <div class="fort-3d-canvas" id="fort3dCanvas">
+            <!-- 3D Fort Wireframe Model (CSS 3D) -->
+            <div class="fort-wireframe" id="fortWireframe">
+              <canvas id="fortCanvas" width="800" height="450"></canvas>
+            </div>
+            <div class="fort-3d-placeholder" id="fort3dPlaceholder" style="position:absolute; bottom:24px; left:50%; transform:translateX(-50%); z-index:5;">
+              <div class="fort-3d-placeholder__badge">
+                🔧 Prototype — Interactive 3D architectural model
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Rani Lakshmibai -->
+    <section class="jhansi-section" id="raniSection">
+      <div class="container">
+        <div class="animate-on-scroll">
+          <div class="section-badge">👑 Historical Figure</div>
+          <h2 class="section-title">Rani Lakshmibai of Jhansi</h2>
+          <p class="section-subtitle">The queen who became a symbol of India's resistance and valor.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="rani-section-grid animate-on-scroll">
+          <div class="rani-portrait">
+            <img src="assets/images/rani-lakshmibai.jpg" alt="Rani Lakshmibai of Jhansi — historical artistic representation">
+            <div class="rani-portrait__caption">
+              <div class="rani-portrait__name">Rani Lakshmibai</div>
+              <div class="rani-portrait__dates">19 November 1828 – 18 June 1858</div>
+            </div>
+          </div>
+
+          <div class="rani-content">
+            <h3>Connection with Jhansi</h3>
+            <p>Born as Manikarnika Tambe in Varanasi, she married Maharaja Gangadhar Rao Newalkar, the ruler of Jhansi, in 1842 and was given the name Lakshmibai. After the death of the Maharaja in 1853, the British East India Company attempted to annex Jhansi under the Doctrine of Lapse, refusing to recognize her adopted son Damodar Rao as the legal heir.</p>
+
+            <h3>Role in Jhansi's History</h3>
+            <p>Rani Lakshmibai administered Jhansi effectively after her husband's death. She strengthened the defenses of the city, trained women in combat, and managed the affairs of the state. Her leadership during a period of political turmoil is documented by both Indian and British historical sources.</p>
+
+            <h3>The 1857 Uprising</h3>
+            <p>During the Indian Rebellion of 1857, Jhansi became a center of resistance against the British. Rani Lakshmibai led the defense of Jhansi Fort against the forces of Sir Hugh Rose in March 1858. After the fall of Jhansi, she escaped and joined Tantia Tope's forces at Kalpi and later at Gwalior, where she died fighting on 18 June 1858.</p>
+
+            <h3>Places in Jhansi Associated with Her</h3>
+            <div class="places-list">
+              <div class="place-tag">
+                <span class="place-icon">🏰</span>
+                <span>Jhansi Fort — where she led the defense</span>
+              </div>
+              <div class="place-tag">
+                <span class="place-icon">🏛️</span>
+                <span>Rani Mahal — her residential palace</span>
+              </div>
+              <div class="place-tag">
+                <span class="place-icon">🗿</span>
+                <span>Rani Lakshmibai Park & Statue</span>
+              </div>
+              <div class="place-tag">
+                <span class="place-icon">🚀</span>
+                <span>Jhansi Space Museum — explores the universe and space science</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Living Culture -->
+    <section class="jhansi-section" id="livingCulture">
+      <div class="container">
+        <div class="animate-on-scroll">
+          <div class="section-badge">🎭 Culture & Traditions</div>
+          <h2 class="section-title">Living Culture of Jhansi</h2>
+          <p class="section-subtitle">Discover the traditions, arts, and cultural practices of Jhansi and Bundelkhand.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="culture-grid animate-on-scroll">
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">🎭</div>
+            <div class="culture-card__title">Folk Traditions</div>
+            <div class="culture-card__desc">Bundelkhand has a rich oral and performative tradition including Alha-Udal folk ballads that celebrate the valor of legendary warriors. These traditions are passed down through generations.</div>
+            <span class="btn-ghost">Explore →</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">🎵</div>
+            <div class="culture-card__title">Folk Music</div>
+            <div class="culture-card__desc">Bundeli folk music includes genres like Rai, Saira, Devi Geet, and seasonal songs tied to festivals and agricultural cycles. Instruments include the dholak, nagara, and algoza.</div>
+            <span class="btn-ghost">Explore →</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">💃</div>
+            <div class="culture-card__title">Folk Dance</div>
+            <div class="culture-card__desc">Rai dance is one of the most prominent folk dances of Bundelkhand, performed at celebrations. Badhai and Diwari are other traditional dance forms associated with festive occasions.</div>
+            <span class="btn-ghost">Explore →</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">🎨</div>
+            <div class="culture-card__title">Traditional Art</div>
+            <div class="culture-card__desc">Bundelkhand's art traditions include wall paintings (Bhitti Chitra), stone carving influenced by Chandela-era temples, and traditional floor art (Sanjhi) created during festivals.</div>
+            <span class="culture-card__badge">Prototype content — to be verified</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">🧵</div>
+            <div class="culture-card__title">Handicrafts</div>
+            <div class="culture-card__desc">The region is known for handloom weaving, brass and bell-metal work. Jhansi has also been associated with lac bangle making and traditional embroidery work.</div>
+            <span class="culture-card__badge">Prototype content — to be verified</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">🍲</div>
+            <div class="culture-card__title">Local Cuisine</div>
+            <div class="culture-card__desc">Bundelkhandi cuisine features dishes like Dal Bafla (baked wheat balls with dal), Bhutte ki Kees (corn preparation), and Lavang Lata. Peda from nearby Mathura is also popular.</div>
+            <span class="btn-ghost">Explore →</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">🎉</div>
+            <div class="culture-card__title">Festivals</div>
+            <div class="culture-card__desc">Apart from pan-Indian festivals, Jhansi celebrates Jhansi Mahotsav — a cultural festival commemorating the city's heritage. Teej, Kajli Teej, and Nag Panchami are also significant locally.</div>
+            <span class="btn-ghost">Explore →</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">🗣️</div>
+            <div class="culture-card__title">Language & Dialect</div>
+            <div class="culture-card__desc">While Hindi is the official language, Bundeli (a Western Hindi dialect) is widely spoken in Jhansi and across Bundelkhand. It has its own literary tradition and is the language of folk songs.</div>
+            <span class="btn-ghost">Explore →</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">👗</div>
+            <div class="culture-card__title">Traditional Clothing</div>
+            <div class="culture-card__desc">Traditional attire in Bundelkhand includes Dhoti-Kurta for men and Saree with distinctive draping styles for women. The Chanderi saree, from nearby Chanderi, is a renowned textile.</div>
+            <span class="culture-card__badge">Prototype content — to be verified</span>
+          </div>
+
+          <div class="culture-card" onclick="alert('Detailed cultural article coming in the full release.')">
+            <div class="culture-card__icon">📖</div>
+            <div class="culture-card__title">Oral Traditions</div>
+            <div class="culture-card__desc">The Alha-Khand epic, celebrating the valor of Alha and Udal, is a cornerstone of Bundeli oral tradition. These ballads are recited and sung, especially during the rainy season.</div>
+            <span class="btn-ghost">Explore →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Bundelkhand Connection -->
+    <section class="jhansi-section" id="bundelkhandConnection">
+      <div class="container">
+        <div class="animate-on-scroll" style="text-align:center;">
+          <div class="section-badge">🌍 Cultural Region</div>
+          <h2 class="section-title">The Bundelkhand Connection</h2>
+          <p class="section-subtitle" style="margin:0 auto;">Jhansi is more than a historical city — it is part of the wider Bundelkhand cultural region.</p>
+          <div class="section-divider" style="margin:16px auto 0;"></div>
+        </div>
+
+        <div class="bundelkhand-flow animate-on-scroll">
+          <div class="flow-node">
+            <div class="flow-node__icon">🏙️</div>
+            <div class="flow-node__label">Jhansi</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-node__icon">🏔️</div>
+            <div class="flow-node__label">Bundelkhand</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-node__icon">🤝</div>
+            <div class="flow-node__label">Shared Traditions</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-node__icon">🎭</div>
+            <div class="flow-node__label">Folk Culture</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-node__icon">🎶</div>
+            <div class="flow-node__label">Music · Dance · Art</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">
+            <div class="flow-node__icon">🍲</div>
+            <div class="flow-node__label">Food · Festivals</div>
+          </div>
+        </div>
+
+        <div class="bundelkhand-desc animate-on-scroll">
+          <p>Bundelkhand is a historic region spanning parts of Uttar Pradesh and Madhya Pradesh, encompassing cities like Jhansi, Orchha, Datia, Tikamgarh, Chhatarpur, and Sagar. The region shares a common cultural identity defined by the Bundeli language, shared folk traditions, distinctive architecture, and a rich legacy of valor and artistry dating back centuries.</p>
+          <p>Understanding Jhansi means understanding its deep roots in this broader cultural landscape — where fort architecture blends with folk music, where warrior legends meet devotional poetry, and where cuisine tells the story of the land itself.</p>
+          <button class="btn-outline" onclick="alert('Bundelkhand expansion coming in future releases! Stay tuned.')">
+            🌍 Explore Bundelkhand — Coming Soon
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Local Food & Cuisine -->
+    <section class="jhansi-section" id="localFood">
+      <div class="container">
+        <div class="animate-on-scroll">
+          <div class="section-badge">🍲 Culinary Heritage</div>
+          <h2 class="section-title">Food Traditions of Jhansi & Bundelkhand</h2>
+          <p class="section-subtitle">Explore the culinary heritage that has sustained and celebrated Bundelkhandi culture for centuries.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="food-grid animate-on-scroll">
+          
+          <div class="food-card">
+            <img class="food-card__img" src="assets/images/moong-dal-chilla.jpg" alt="Moong Dal Chilla">
+            <div class="food-card__body">
+              <h3 class="food-card__name">Moong Dal Chilla</h3>
+              <p class="food-card__desc">A healthy and savory Indian lentil crepe made from moong dal, cooked to golden perfection and often enjoyed with spicy green or sweet red chutneys. A perfect light snack!</p>
+              <div class="food-card__context">🥞 Popular savory snack</div>
+            </div>
+          </div>
+
+          <div class="food-card">
+            <img class="food-card__img" src="assets/images/dau-ke-samose.jpg" alt="Dau Ke Samose - Rayta Samosa">
+            <div class="food-card__body">
+              <h3 class="food-card__name">Dau Ke Samose</h3>
+              <p class="food-card__desc">A legendary Jhansi specialty featuring crushed crispy samosas generously drenched in creamy white rayta (yogurt), topped with spicy green chutney and sweet tamarind sauce.</p>
+              <div class="food-card__context">🥟 Legendary local street food</div>
+            </div>
+          </div>
+
+          <div class="food-card">
+            <img class="food-card__img" src="assets/images/papdi-chaat.jpg" alt="Papdi Chaat - Famous Jhansi Street Food">
+            <div class="food-card__body">
+              <h3 class="food-card__name">Jhansi ki Papdi Chaat</h3>
+              <p class="food-card__desc">A mouth-watering street food sensation in Jhansi, featuring crispy papdi topped with yogurt, tangy tamarind chutney, spicy green chutney, sev, and fresh pomegranate.</p>
+              <div class="food-card__context">🥘 Famous local street food</div>
+            </div>
+          </div>
+          <div class="food-card">
+            <img class="food-card__img" src="assets/images/kadhi-samosa.jpg" alt="Kadhi Samosa">
+            <div class="food-card__body">
+              <h3 class="food-card__name">Kadhi Samosa</h3>
+              <p class="food-card__desc">A unique and beloved street food where a crispy samosa is served submerged in a tangy, bright yellow yogurt curry (kadhi), finished with a spicy tadka and fresh onions.</p>
+              <div class="food-card__context">🍲 Spicy street food delight</div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__brand"><span class="gold-text">Dharohar</span></div>
+        <p class="footer__tagline">India's Living Heritage — Preserving the past, inspiring the future.</p>
+        <div class="footer__links">
+          <a href="#" class="footer__link" onclick="navigateToLanding()">Home</a>
+          <a href="#heritageOverview" class="footer__link">Heritage</a>
+          <a href="#historicalTimeline" class="footer__link">Timeline</a>
+          <a href="#livingCulture" class="footer__link">Culture</a>
+          <a href="#localFood" class="footer__link">Cuisine</a>
+        </div>
+        <p class="footer__copy">© 2026 Dharohar Project — Prototype. Jhansi Pilot Region.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Firebase SDK Setup (Modular API via CDN) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDBDMacBEOz6UEuvV99Jplu33thtVSo_Ps",
+      authDomain: "dharohar-21384.firebaseapp.com",
+      projectId: "dharohar-21384",
+      storageBucket: "dharohar-21384.firebasestorage.app",
+      messagingSenderId: "1019336157903",
+      appId: "1:1019336157903:web:52f907a4f590726548a5ba",
+      measurementId: "G-HKM0MP87KN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    
+    // Attach to window so other scripts (like app.js) can use it if needed
+    window.firebaseApp = app;
+    window.firebaseAnalytics = analytics;
+    console.log("🔥 Firebase initialized successfully!");
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>
