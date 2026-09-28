@@ -651,3 +651,266 @@ function resetFortView() {
   fortZoom = 1;
   if (window._drawFort) window._drawFort();
 }
+
+// =========== ADD YOUR HERITAGE LOGIC ===========
+let currentCategory = '';
+let isRecording = false;
+let mockTranscriptText = 'Hamare gaon mein har saal ye parampara hoti hai. Hum mitti se sundar bartan banate hain...';
+let recordingInterval;
+
+function openHeritageForm() {
+  document.getElementById('heritageFormOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  nextStep(1); // Reset to step 1
+}
+
+function closeHeritageForm() {
+  document.getElementById('heritageFormOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function nextStep(step) {
+  document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+  document.getElementById(`formStep${step}`).classList.add('active');
+}
+
+function selectCategory(cat) {
+  currentCategory = cat;
+  
+  if (cat === 'Artisan / Knowledge Keeper') {
+    document.getElementById('standardForm').style.display = 'none';
+    document.getElementById('artisanForm').style.display = 'block';
+    document.getElementById('step3Title').textContent = 'Artisan Details';
+  } else {
+    document.getElementById('standardForm').style.display = 'block';
+    document.getElementById('artisanForm').style.display = 'none';
+    document.getElementById('step3Title').textContent = `Share Details: ${cat}`;
+  }
+  nextStep(3);
+}
+
+function toggleRecord() {
+  const btn = document.getElementById('btnRecord');
+  if (!isRecording) {
+    isRecording = true;
+    btn.classList.add('recording');
+    btn.innerHTML = '🛑 Stop Recording';
+  } else {
+    isRecording = false;
+    btn.classList.remove('recording');
+    btn.innerHTML = '🎙️ Record Your Story';
+    
+    // Show transcript
+    document.getElementById('transcriptArea').style.display = 'block';
+    document.getElementById('hTranscript').value = mockTranscriptText;
+  }
+}
+
+function playMockRecording() {
+  alert('Playing mock recording...');
+}
+
+function simulateAI() {
+  nextStep(4);
+  setTimeout(() => {
+    // Generate mock AI output based on category
+    let aiContent = '';
+    
+    if (currentCategory === 'Artisan / Knowledge Keeper') {
+      const aName = document.getElementById('aName').value || 'Anonymous Artisan';
+      const aVillage = document.getElementById('aVillage').value || 'Jhansi District';
+      const aCraft = document.getElementById('aCraft').value || 'Traditional Craft';
+      
+      aiContent = `
+        <p><strong>Category:</strong> ${currentCategory}</p>
+        <p><strong>Knowledge Keeper:</strong> ${aName}</p>
+        <p><strong>Location:</strong> ${aVillage}</p>
+        <p><strong>Craft/Skill:</strong> ${aCraft}</p>
+      `;
+    } else {
+      const hName = document.getElementById('hName').value || 'Untitled Heritage';
+      const hVillage = document.getElementById('hVillage').value || 'Jhansi District';
+      
+      aiContent = `
+        <p><strong>Heritage Name:</strong> ${hName}</p>
+        <p><strong>Category:</strong> ${currentCategory}</p>
+        <p><strong>Location:</strong> ${hVillage}, Jhansi</p>
+        <p><strong>Description:</strong> ${document.getElementById('hTranscript').value || document.getElementById('hDesc').value || 'No description provided.'}</p>
+      `;
+    }
+    
+    document.getElementById('aiResult').innerHTML = aiContent;
+    nextStep(5);
+  }, 2000);
+}
+
+function showFinalCard() {
+  const finalCard = document.getElementById('finalCard');
+  
+  if (currentCategory === 'Artisan / Knowledge Keeper') {
+    finalCard.innerHTML = `
+      <h3>👨‍🎨 ${document.getElementById('aName').value || 'Anonymous Artisan'}</h3>
+      <div class="meta">📍 ${document.getElementById('aVillage').value || 'Jhansi'} • 🧵 ${document.getElementById('aCraft').value || 'Traditional Craft'}</div>
+      <div class="desc">"${document.getElementById('aDesc').value || document.getElementById('aWhat').value || 'Local knowledge keeper'}"</div>
+    `;
+  } else {
+    finalCard.innerHTML = `
+      <h3>🏛️ ${document.getElementById('hName').value || 'Untitled Heritage'}</h3>
+      <div class="meta">📍 ${document.getElementById('hVillage').value || 'Jhansi'} • ✨ ${currentCategory}</div>
+      <div class="desc">"${document.getElementById('hTranscript').value || document.getElementById('hDesc').value || 'A local tradition'}"</div>
+      <button class="btn-ghost" style="padding:0;" onclick="playMockRecording()">🎙️ Listen to the original story</button>
+    `;
+  }
+  
+  nextStep(6);
+}
+
+/* ============================================
+   SANSKRITI SETU AI CHATBOT LOGIC
+   ============================================ */
+
+function openSanskritiChat(initialContext = '') {
+  document.getElementById('sanskritiChatOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  if (initialContext && typeof initialContext === 'string') {
+    addChatMessage(`Hi! I'm ready to answer questions about ${initialContext}.`, 'ai');
+  } else if (document.getElementById('chatMessages').children.length === 0) {
+    addChatMessage('Namaste! I am Sanskriti Setu AI. You can ask me anything about Jhansi\'s rich history, forts, culture, traditions, or Rani Lakshmibai.', 'ai');
+  }
+}
+
+function closeSanskritiChat() {
+  document.getElementById('sanskritiChatOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function toggleChatVoice() {
+  const btn = document.getElementById('chatMicBtn');
+  if (btn.classList.contains('recording')) {
+    btn.classList.remove('recording');
+    document.getElementById('chatInput').value = "Jhansi Fort kab bana tha?";
+    setTimeout(handleChatSubmit, 500);
+  } else {
+    btn.classList.add('recording');
+  }
+}
+
+function handleChatSubmit() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  
+  input.value = '';
+  sendChatMessage(msg);
+}
+
+function sendChatMessage(msg) {
+  addChatMessage(msg, 'user');
+  
+  const typingId = 'typing-' + Date.now();
+  addChatMessage('<span class="ai-typing">...</span>', 'ai', typingId);
+  
+  setTimeout(() => {
+    const typingEl = document.getElementById(typingId);
+    if(typingEl) typingEl.remove();
+    generateMockAIResponse(msg);
+  }, 1000);
+}
+
+function addChatMessage(htmlContent, sender, id = null) {
+  const messagesContainer = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `chat-bubble ${sender}-msg`;
+  if (id) div.id = id;
+  
+  div.innerHTML = htmlContent;
+  messagesContainer.appendChild(div);
+  
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function generateMockAIResponse(prompt) {
+  const query = prompt.toLowerCase();
+  const lang = document.getElementById('chatLanguage').value;
+  let response = '';
+  
+  if (query.includes('fort') || query.includes('qila') || query.includes('kab bana')) {
+    if (lang === 'hi') {
+      response = `
+        <p>झांसी का किला (Jhansi Fort) 1613 में ओरछा के राजा बीर सिंह जू देव बुंदेला द्वारा बनवाया गया था। यह किला बंगिरा नामक पहाड़ी पर स्थित है।</p>
+        <p>क्या आप इसके बारे में और जानना चाहते हैं?</p>
+        <div class="chat-source">Source: Verified Historical Database</div>
+        <div class="chat-actions">
+          <button class="chat-btn" onclick="document.getElementById('fort3dViewer').scrollIntoView(); closeSanskritiChat();">Explore Jhansi Fort</button>
+          <button class="chat-btn" onclick="scrollToSection('heritageMap'); closeSanskritiChat();">View on Map</button>
+        </div>
+      `;
+    } else if (lang === 'bu') {
+      response = `
+        <p>झांसी को किलो (Jhansi Fort) 1613 में ओरछा के राजा बीर सिंह जू देव बुंदेला जू ने बनवाओ हतो। ई किलो बंगिरा नाम की पहाड़िया पे बनो है।</p>
+        <p>का तुम ईके बारे में और जानवे की चाहत हो?</p>
+        <div class="chat-source">Source: Verified Historical Database</div>
+        <div class="chat-actions">
+          <button class="chat-btn" onclick="document.getElementById('fort3dViewer').scrollIntoView(); closeSanskritiChat();">Explore Jhansi Fort</button>
+          <button class="chat-btn" onclick="scrollToSection('heritageMap'); closeSanskritiChat();">View on Map</button>
+        </div>
+      `;
+    } else {
+      response = `
+        <p>Jhansi Fort is one of the major historical landmarks of Jhansi. It was built in 1613 by Raja Bir Singh Deo of Orchha on Bangira hill.</p>
+        <p>It is closely associated with the history of Jhansi and Rani Lakshmibai, particularly during the events of 1857.</p>
+        <p>Would you like to explore it further?</p>
+        <div class="chat-source">Sources: • Heritage database • Government historical source</div>
+        <div class="chat-actions">
+          <button class="chat-btn" onclick="document.getElementById('fort3dViewer').scrollIntoView(); closeSanskritiChat();">Explore Jhansi Fort</button>
+          <button class="chat-btn" onclick="scrollToSection('heritageMap'); closeSanskritiChat();">View on Map</button>
+        </div>
+      `;
+    }
+  } 
+  else if (query.includes('rani lakshmibai') || query.includes('rani') || query.includes('lakshmi')) {
+    response = `
+      <p>Rani Lakshmibai was the legendary Queen of Jhansi and a prominent figure in the Indian Rebellion of 1857. She fiercely defended Jhansi against British forces.</p>
+      <div class="chat-source">Source: Verified Historical Database</div>
+      <div class="chat-actions">
+        <button class="chat-btn" onclick="scrollToSection('raniSection'); closeSanskritiChat();">Explore Rani Lakshmibai</button>
+        <button class="chat-btn" onclick="openHeritageCard('rani-mahal'); closeSanskritiChat();">View Rani Mahal</button>
+      </div>
+    `;
+  }
+  else if (query.includes('culture') || query.includes('tradition') || query.includes('bundelkhand') || query.includes('festival')) {
+    response = `
+      <p>Jhansi is deeply rooted in Bundelkhand culture. Traditional folk dances like 'Rai' and 'Badhai', and oral traditions like the 'Alha-Khand' epic are widely practiced.</p>
+      <p>Recently, a local community member documented a traditional festival practiced in a nearby village.</p>
+      <div class="chat-source" style="color:#d4600c;">Community Submitted — Not Yet Verified</div>
+      <div class="chat-actions">
+        <button class="chat-btn" onclick="scrollToSection('livingCulture'); closeSanskritiChat();">Explore Living Culture</button>
+      </div>
+    `;
+  }
+  else if (query.includes('1857') || query.includes('uprising')) {
+    response = `
+      <p>In 1857, Jhansi became a major center of resistance against the British East India Company. Rani Lakshmibai led the defense of Jhansi Fort against Sir Hugh Rose.</p>
+      <div class="chat-source">Source: Verified Historical Database</div>
+      <div class="chat-actions">
+        <button class="chat-btn" onclick="scrollToSection('historicalTimeline'); closeSanskritiChat();">View Timeline</button>
+      </div>
+    `;
+  }
+  else {
+    // Graceful fallback for non-Jhansi questions (No Hallucination)
+    if (query.includes('france') || query.includes('capital') || query.includes('who is the prime minister')) {
+      response = `
+        <p>I’m Sanskriti Setu AI, focused on Jhansi’s heritage right now. Try asking me something about Jhansi's history, culture or traditions.</p>
+      `;
+    } else {
+      response = `
+        <p>I couldn't find enough reliable information about this in my current Jhansi heritage knowledge base.</p>
+        <p>Please try asking about Jhansi Fort, Rani Lakshmibai, or local traditions.</p>
+      `;
+    }
+  }
+  
+  addChatMessage(response, 'ai');
+}

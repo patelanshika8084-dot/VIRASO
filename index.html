@@ -33,6 +33,7 @@
         <a href="#" class="navbar__link" id="nav-explore" onclick="navigateToJhansi()">Explore Jhansi</a>
         <a href="#" class="navbar__link">Heritage Map</a>
         <a href="#" class="navbar__link">About</a>
+        <a href="#" class="navbar__link" style="color: var(--gold-400);" onclick="openHeritageForm()">+ Add Heritage</a>
       </div>
     </div>
   </nav>
@@ -135,7 +136,7 @@
         </p>
         <div class="jhansi-hero__stats">
           <div class="jhansi-hero__stat">
-            <div class="jhansi-hero__stat-value">11th C.</div>
+            <div class="jhansi-hero__stat-value">19th C.</div>
             <div class="jhansi-hero__stat-label">Historical Origins</div>
           </div>
           <div class="jhansi-hero__stat">
@@ -150,6 +151,10 @@
             <div class="jhansi-hero__stat-value">1857</div>
             <div class="jhansi-hero__stat-label">Revolt Connection</div>
           </div>
+        </div>
+        <div style="margin-top: 32px; display: flex; flex-direction: column; gap: 8px;">
+          <button class="btn-primary" style="align-self: flex-start;" onclick="openHeritageForm()">+ Add Your Heritage</button>
+          <span style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">Know a tradition that deserves to be remembered?</span>
         </div>
       </div>
     </section>
@@ -399,6 +404,7 @@
           <p class="heritage-card__desc" id="hcDesc"></p>
           <div class="heritage-card__actions">
             <button class="btn-primary" onclick="alert('Full exploration experience coming in the next release!')">Explore</button>
+            <button class="btn-outline" onclick="openSanskritiChat('Heritage Card: ' + document.getElementById('hcName').textContent)">Ask Sanskriti Setu</button>
             <button class="btn-outline" onclick="closeHeritageCard(event, true)">Close</button>
           </div>
         </div>
@@ -423,6 +429,9 @@
             <p class="fort-hero__desc">Built in 1613 by Raja Bir Singh Deo of Orchha on Bangira hill, Jhansi Fort is the most iconic landmark of the city. Spread over an area of 15 acres, the fort stands as a symbol of the valor and resistance that defined Jhansi during the Indian Rebellion of 1857.</p>
             <button class="btn-primary" onclick="document.getElementById('fort3dViewer').scrollIntoView({behavior:'smooth'})">
               🏰 Explore the Fort
+            </button>
+            <button class="btn-outline" style="margin-top: 12px; border-color: var(--gold-400); color: var(--gold-400);" onclick="openSanskritiChat('Jhansi Fort')">
+              🤖 Ask Sanskriti Setu about this
             </button>
           </div>
         </div>
@@ -523,6 +532,9 @@
                 <span>Jhansi Space Museum — explores the universe and space science</span>
               </div>
             </div>
+            <button class="btn-outline" style="margin-top: 24px; border-color: var(--gold-400); color: var(--gold-400);" onclick="openSanskritiChat('Rani Lakshmibai')">
+              🤖 Ask AI about her
+            </button>
           </div>
         </div>
       </div>
@@ -733,6 +745,226 @@
       </div>
     </footer>
 
+    </footer>
+
+    <!-- Sanskriti Setu AI Floating Button (Visible only on Jhansi Page) -->
+    <button class="sanskriti-bot-btn" id="sanskritiBotBtn" onclick="openSanskritiChat()">
+      <div class="sanskriti-bot-btn__icon">🤖</div>
+      <div class="sanskriti-bot-btn__text">
+        <strong>Ask Sanskriti Setu AI</strong>
+        <span>Ask anything about Jhansi's heritage</span>
+      </div>
+    </button>
+  </div>
+
+  <!-- ===== ADD YOUR HERITAGE MODAL ===== -->
+  <div class="heritage-form-overlay" id="heritageFormOverlay">
+    <div class="heritage-form-container">
+      <button class="heritage-form-close" onclick="closeHeritageForm()">✕</button>
+      
+      <!-- Step 1: Who can contribute -->
+      <div class="form-step active" id="formStep1">
+         <h2>Add Your Heritage</h2>
+         <p>Anyone from the local community can contribute.</p>
+         <p class="examples">Examples: Village residents, Students, Elderly people, Local historians, Traditional artists, Artisans, Folk singers, Folk dancers, Craftspeople, Community members</p>
+         <button class="btn-primary mt-4" onclick="nextStep(2)">Get Started</button>
+      </div>
+
+      <!-- Step 2: What would you like to share? -->
+      <div class="form-step" id="formStep2">
+         <h2>What would you like to share?</h2>
+         <div class="category-grid">
+           <div class="cat-card" onclick="selectCategory('Historical Place')">🏛️ Historical Place</div>
+           <div class="cat-card" onclick="selectCategory('Folk Tradition')">🎭 Folk Tradition</div>
+           <div class="cat-card" onclick="selectCategory('Folk Music')">🎵 Folk Music</div>
+           <div class="cat-card" onclick="selectCategory('Folk Dance')">💃 Folk Dance</div>
+           <div class="cat-card" onclick="selectCategory('Traditional Art')">🎨 Traditional Art</div>
+           <div class="cat-card" onclick="selectCategory('Handicraft')">🧵 Handicraft</div>
+           <div class="cat-card" onclick="selectCategory('Traditional Food')">🍲 Traditional Food</div>
+           <div class="cat-card" onclick="selectCategory('Festival / Ritual')">🎉 Festival / Ritual</div>
+           <div class="cat-card" onclick="selectCategory('Local Story / Oral History')">📖 Local Story / Oral History</div>
+           <div class="cat-card" onclick="selectCategory('Local Language / Saying')">🗣️ Local Language / Saying</div>
+           <div class="cat-card" onclick="selectCategory('Artisan / Knowledge Keeper')">👨‍🎨 Artisan / Knowledge Keeper</div>
+           <div class="cat-card" onclick="selectCategory('Other Cultural Heritage')">📸 Other Cultural Heritage</div>
+         </div>
+      </div>
+
+      <!-- Step 3: Simple Contribution Form -->
+      <div class="form-step" id="formStep3">
+         <h2 id="step3Title">Share Details</h2>
+         <div id="standardForm">
+           <div class="form-group">
+             <label>Heritage Name</label>
+             <input type="text" id="hName" placeholder="e.g. Traditional Bundelkhand Pottery">
+           </div>
+           <div class="form-group-row">
+             <div class="form-group">
+               <label>Village / Place</label>
+               <input type="text" id="hVillage" placeholder="Village name">
+             </div>
+             <div class="form-group">
+               <label>District</label>
+               <input type="text" id="hDistrict" value="Jhansi" readonly>
+             </div>
+           </div>
+           <div class="form-group">
+             <label>Tell us about it</label>
+             <div class="tell-us-options">
+               <button class="btn-voice" id="btnRecord" onclick="toggleRecord()">🎙️ Record Your Story</button>
+               <span style="font-size:0.8rem;color:var(--text-tertiary);">or</span>
+               <textarea id="hDesc" rows="3" placeholder="Tell us what you know in your own words..."></textarea>
+             </div>
+             <div id="transcriptArea" style="display:none; margin-top:12px;">
+               <p style="font-size:0.85rem;color:var(--gold-400);margin-bottom:4px;"><strong>Transcript:</strong></p>
+               <textarea id="hTranscript" rows="3"></textarea>
+               <button class="btn-outline" style="padding:6px 12px;font-size:0.8rem;margin-top:8px;" onclick="playMockRecording()">▶ Play Recording</button>
+             </div>
+           </div>
+           
+           <div class="form-group">
+              <label>Upload Photos</label>
+              <input type="file" multiple accept="image/*">
+           </div>
+           <div class="form-group">
+              <label>Upload Video (Optional)</label>
+              <input type="file" accept="video/*">
+           </div>
+           <div class="form-group-row">
+             <div class="form-group">
+                <label>Related Festival/Season (Optional)</label>
+                <input type="text" id="hFestival">
+             </div>
+             <div class="form-group">
+                <label>Who knows/practices this? (Optional)</label>
+                <select id="hWho">
+                   <option value="">Select...</option>
+                   <option>Family</option>
+                   <option>Village</option>
+                   <option>Artisan</option>
+                   <option>Community</option>
+                   <option>Other</option>
+                </select>
+             </div>
+           </div>
+         </div>
+
+         <div id="artisanForm" style="display:none;">
+            <div class="form-group">
+             <label>Name</label>
+             <input type="text" id="aName" placeholder="Artisan name">
+           </div>
+           <div class="form-group">
+             <label>Village</label>
+             <input type="text" id="aVillage" placeholder="Village name">
+           </div>
+           <div class="form-group-row">
+             <div class="form-group">
+               <label>Craft/Skill</label>
+               <input type="text" id="aCraft">
+             </div>
+             <div class="form-group">
+               <label>Years of experience</label>
+               <input type="number" id="aExp">
+             </div>
+           </div>
+           <div class="form-group">
+             <label>What do you make/teach?</label>
+             <textarea id="aWhat" rows="2"></textarea>
+           </div>
+           <div class="form-group">
+             <label>Short Description</label>
+             <textarea id="aDesc" rows="2"></textarea>
+           </div>
+           <div class="form-group">
+              <label>Photo</label>
+              <input type="file" accept="image/*">
+           </div>
+           <div class="form-group">
+              <label>Process Video (Optional)</label>
+              <input type="file" accept="video/*">
+           </div>
+           <div class="form-group">
+              <label>Contact Information (Optional)</label>
+              <input type="text" id="aContact" placeholder="Phone or Email">
+              <small class="form-note">Contact details will remain private and will only be shared if explicitly allowed.</small>
+           </div>
+         </div>
+
+         <div class="form-actions mt-4" style="display:flex;gap:12px;">
+           <button class="btn-outline" onclick="nextStep(2)">Back</button>
+           <button class="btn-primary" onclick="simulateAI()">Submit & Process</button>
+         </div>
+      </div>
+
+      <!-- Step 4: AI Assisted Structuring -->
+      <div class="form-step" id="formStep4" style="text-align:center;">
+         <h2>AI Processing...</h2>
+         <div class="ai-spinner">🤖</div>
+         <p style="color:var(--text-secondary);">Structuring your heritage information...</p>
+      </div>
+
+      <!-- Step 5: Verification & Card Display -->
+      <div class="form-step" id="formStep5">
+         <h2>Here's how we understood your contribution</h2>
+         <div class="structured-result" id="aiResult"></div>
+         <div class="form-actions mt-4" style="display:flex;gap:12px;">
+           <button class="btn-outline" onclick="nextStep(3)">Edit Details</button>
+           <button class="btn-primary" onclick="showFinalCard()">Looks Correct</button>
+         </div>
+      </div>
+
+      <!-- Step 6: Final Heritage Card -->
+      <div class="form-step" id="formStep6">
+         <h2>Contribution Submitted!</h2>
+         <p style="margin-bottom:16px;">Status: <span class="status-badge status-community">🟡 Community Submitted</span></p>
+         
+         <div class="final-heritage-card" id="finalCard">
+           <!-- Content injected here -->
+         </div>
+
+         <button class="btn-primary mt-4" onclick="closeHeritageForm()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SANSKRITI SETU AI CHATBOT MODAL ===== -->
+  <div class="sanskriti-chat-overlay" id="sanskritiChatOverlay">
+    <div class="sanskriti-chat-container">
+      <div class="chat-header">
+        <div class="chat-header__info">
+          <h2>Sanskriti Setu AI</h2>
+          <p>Your AI guide to Jhansi's heritage</p>
+          <div class="chat-status">🟢 Jhansi Heritage Mode</div>
+        </div>
+        <div class="chat-header__actions">
+          <select id="chatLanguage" class="chat-lang-select">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="bu">Bundeli</option>
+          </select>
+          <button class="chat-close" onclick="closeSanskritiChat()">✕</button>
+        </div>
+      </div>
+      
+      <div class="chat-messages" id="chatMessages">
+        <!-- Messages will be injected here -->
+      </div>
+      
+      <div class="chat-suggested" id="chatSuggested">
+        <button class="suggested-btn" onclick="sendChatMessage('Why is Jhansi Fort historically important?')">Why is Jhansi Fort historically important?</button>
+        <button class="suggested-btn" onclick="sendChatMessage('Tell me about Rani Lakshmibai.')">Tell me about Rani Lakshmibai.</button>
+        <button class="suggested-btn" onclick="sendChatMessage('What happened in Jhansi during 1857?')">What happened in Jhansi during 1857?</button>
+        <button class="suggested-btn" onclick="sendChatMessage('What are the important heritage places in Jhansi?')">What are the important heritage places in Jhansi?</button>
+        <button class="suggested-btn" onclick="sendChatMessage('Tell me about Jhansi\'s Bundelkhand culture.')">Tell me about Jhansi's Bundelkhand culture.</button>
+        <button class="suggested-btn" onclick="sendChatMessage('What traditional culture is associated with Jhansi?')">What traditional culture is associated with Jhansi?</button>
+      </div>
+
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Ask about Jhansi's history, culture, or traditions..." onkeydown="if(event.key === 'Enter') handleChatSubmit()">
+        <button class="chat-mic-btn" id="chatMicBtn" onclick="toggleChatVoice()" title="Voice Question">🎙️</button>
+        <button class="chat-send-btn" onclick="handleChatSubmit()">Send</button>
+      </div>
+    </div>
   </div>
 
   <!-- Firebase SDK Setup (Modular API via CDN) -->
